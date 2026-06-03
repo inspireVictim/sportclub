@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления — Спортивный клуб</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <span class="sidebar__logo">SC</span>
+                <div>
+                    <div class="sidebar__brand-title">Sport Club</div>
+                    <div class="sidebar__brand-sub">Управление клубом</div>
+                </div>
+            </div>
+
+            <nav class="sidebar__nav">
+                <button class="nav-item is-active" data-view="schedule">
+                    <span class="nav-item__icon">▤</span> Расписание
+                </button>
+                <button class="nav-item" data-view="clients">
+                    <span class="nav-item__icon">◉</span> Клиенты
+                </button>
+                <button class="nav-item" data-view="subscriptions">
+                    <span class="nav-item__icon">★</span> Абонементы
+                </button>
+                <button class="nav-item" data-view="attendance">
+                    <span class="nav-item__icon">✓</span> Посещения
+                </button>
+                <button class="nav-item" data-view="trainers" data-role-admin>
+                    <span class="nav-item__icon">♟</span> Тренеры
+                </button>
+                <button class="nav-item" data-view="tariffs" data-role-admin>
+                    <span class="nav-item__icon">⌗</span> Тарифы
+                </button>
+            </nav>
+
+            <div class="sidebar__footer">
+                <div class="user-card">
+                    <div class="user-card__avatar" id="user-initials">—</div>
+                    <div>
+                        <div class="user-card__name" id="user-name">—</div>
+                        <div class="user-card__role" id="user-role">—</div>
+                    </div>
+                </div>
+                <button id="logout-btn" class="btn btn--ghost btn--block">Выйти</button>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="content__header">
+                <h1 id="view-title">Расписание</h1>
+                <div class="content__actions">
+                    <button id="action-btn" class="btn btn--primary" hidden></button>
+                </div>
+            </header>
+
+            <!-- Расписание -->
+            <section class="view" id="view-schedule">
+                <div class="schedule-toolbar">
+                    <button id="week-prev" class="btn btn--ghost">◀ Назад</button>
+                    <div class="schedule-toolbar__period" id="week-label">—</div>
+                    <button id="week-next" class="btn btn--ghost">Вперёд ▶</button>
+                </div>
+                <div class="schedule" id="schedule-grid"></div>
+            </section>
+
+            <!-- Клиенты -->
+            <section class="view" id="view-clients" hidden>
+                <div class="data-table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ФИО</th>
+                                <th>Дата рождения</th>
+                                <th>Телефон</th>
+                                <th>Email</th>
+                                <th>Дата регистрации</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Абонементы -->
+            <section class="view" id="view-subscriptions" hidden>
+                <div class="data-table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Клиент</th>
+                                <th>Тариф</th>
+                                <th>Куплен</th>
+                                <th>Действует до</th>
+                                <th>Остаток</th>
+                                <th>Статус</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="subs-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Посещения -->
+            <section class="view" id="view-attendance" hidden>
+                <div class="data-table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Время</th>
+                                <th>Занятие</th>
+                                <th>Клиент</th>
+                                <th>Зафиксировал</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="att-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Тренеры -->
+            <section class="view" id="view-trainers" hidden>
+                <div class="data-table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ФИО</th>
+                                <th>Специализация</th>
+                                <th>Телефон</th>
+                                <th>Дата приёма</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trainers-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Тарифы -->
+            <section class="view" id="view-tariffs" hidden>
+                <div class="data-table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Срок (дней)</th>
+                                <th>Занятий</th>
+                                <th>Цена, сом</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tariffs-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Модальные окна -->
+    <div id="modal-overlay" class="modal-overlay" hidden>
+        <div class="modal" id="modal">
+            <header class="modal__header">
+                <h2 id="modal-title">—</h2>
+                <button class="modal__close" id="modal-close">×</button>
+            </header>
+            <div class="modal__body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="toast-stack" class="toast-stack"></div>
+
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

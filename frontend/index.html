@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спортивный клуб — Вход</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="login-page">
+    <main class="login-card">
+        <h1 class="login-card__title">Спортивный клуб</h1>
+        <p class="login-card__subtitle">Система управления клубом</p>
+
+        <form id="login-form" class="form">
+            <label class="field">
+                <span>Логин</span>
+                <input name="login" type="text" required autocomplete="username" value="admin">
+            </label>
+            <label class="field">
+                <span>Пароль</span>
+                <input name="password" type="password" required autocomplete="current-password" value="admin123">
+            </label>
+            <button type="submit" class="btn btn--primary btn--block">Войти в систему</button>
+            <p id="login-error" class="form__error" hidden></p>
+        </form>
+
+        <div class="login-card__hint">
+            <strong>Демонстрационные учётные записи:</strong>
+            <ul>
+                <li><code>admin</code> / <code>admin123</code> — администратор</li>
+                <li><code>manager</code> / <code>manager123</code> — менеджер</li>
+                <li><code>reception</code> / <code>reception123</code> — ресепшн</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="/static/js/login.js"></script>
+</body>
+</html>
